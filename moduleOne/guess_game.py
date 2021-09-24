@@ -3,10 +3,9 @@ import game_controller;
 
 # Setted values
 difficulty_rates = list([8, 5, 3])
-start_points = list([100, 60, 50])
-lose_points = list([10, 15, 20])
-minimum_number = random.randrange(1, 10);
-maximum_number = random.randrange(10, 100);
+lose_points = list([10, 20, 30])
+minimum_number = 1;
+maximum_number = random.randrange(50, 100);
 secret_number = int(random.randrange(minimum_number, maximum_number));
 
 difficulty = 0;
@@ -14,7 +13,7 @@ total_chances = difficulty_rates[difficulty];
 
 current_round = 1;
 
-current_points = start_points[difficulty]
+current_points = 100;
 points_to_lose = lose_points[difficulty]
 
 limit = "{} to {}".format(minimum_number, maximum_number);
@@ -36,7 +35,7 @@ def start_game():
 
     start_game_loop();
 
-    game_controller.finish_game();
+    game_controller.finish_game(current_points);
     print("The secret number is {}".format(secret_number));
 
 def start_game_loop():
@@ -57,4 +56,5 @@ def start_game_loop():
         else:
             print("You typed the wrong number! The number typed is lower than the secret number.")
 
+        global current_points;
         current_points = current_points - points_to_lose;
