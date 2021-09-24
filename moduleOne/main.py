@@ -1,4 +1,5 @@
-import guess_game, hangman_game;
+import guess_game;
+import hangman_game;
 
 def start_selector():
     print("[1] Guess [2] Hangman")
