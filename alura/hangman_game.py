@@ -7,10 +7,9 @@ lose = False;
 words = ["laila", "luke", "preta", "gigi"]
 secret_word = words[random.randrange(0, len(words))].lower();
 
-positions_found = [];
-
 chances = len(secret_word) * 2;
 points = 0;
+positions_found = [];
 
 def start_game():        
     while(not won and not lose):
@@ -50,8 +49,9 @@ def start_game():
         if (right_guess == False):
             handle_incorrect();
 
-        if (chances == 0 | points >= len(secret_word)):
+        if (chances == 0 or points >= len(secret_word)):
             game_controller.finish_game(points);
+            
             print("The correct word is: {}".format(secret_word))
             return;
         

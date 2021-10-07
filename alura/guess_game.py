@@ -1,14 +1,16 @@
 import random;
 import game_controller;
 
-# Setted values
-difficulty_rates = list([8, 5, 3])
 lose_points = list([10, 20, 30])
+
 minimum_number = 1;
 maximum_number = random.randrange(50, 100);
 secret_number = int(random.randrange(minimum_number, maximum_number));
 
 difficulty = 0;
+difficulties = ["Easy", "Medium", "Hard"]
+difficulty_rates = list([8, 5, 3])
+
 total_chances = difficulty_rates[difficulty];
 
 current_round = 1;
@@ -21,23 +23,39 @@ limit = "{} to {}".format(minimum_number, maximum_number);
 def start_game():
     print("Welcome to the Guess Game!")
 
-    print("[1] Easy [2] Medium [3] Hard")
-    dif = int(input("Type your difficulty level: "));
-
-    if (dif < 1 or dif > 3):
-        difficulty = 1;
-        print("You typed a wrong difficulty! Using Easy as default.");
-
-    difficulty = dif - 1;
-    total_chances = difficulty_rates[difficulty];
-
-    print("You selected the difficult {}, you have a total of {} chances".format(difficulty + 1, total_chances))
-
+    select_difficulty();
     start_game_loop();
 
     game_controller.finish_game(current_points);
     print("The secret number is {}".format(secret_number));
 
+def select_difficulty():
+    print(get_difficulty_title());
+    dif_var = int(input("Type your difficulty level: "));
+
+    if (dif_var < 1 or dif_var > 3):
+        difficulty = 1;
+        print("You typed a wrong difficulty! Using {} as default.".format(difficulties[difficulty - 1]));
+
+    difficulty = dif_var - 1;
+    total_chances = difficulty_rates[difficulty];
+
+    print("You selected the difficult {}, you have a total of {} chances".format(difficulty + 1, total_chances));
+    
+def get_difficulty_title():
+    title = "";
+    
+    count = 0;
+    for difficulty_title in difficulties:
+        if (count == len(difficulties)):
+            title = title + "[{}] {}.".format(count + 1, difficulty_title)
+            continue;
+        
+        title = title + "[{}] {},".format(count + 1, difficulty_title)
+        count = count + 1;
+        
+    return title;
+                                                                             
 def start_game_loop():
     for current_round in range(1, total_chances):
         print("Current round: {}".format(str(current_round)))
