@@ -9,7 +9,7 @@ secret_word = words[random.randrange(0, len(words))].lower();
 
 positions_found = [];
 
-chances = 5;
+chances = len(secret_word) * 2;
 points = 0;
 
 def start_game():        
@@ -17,10 +17,23 @@ def start_game():
         right_guess = False;
         already_found = False;
     
+        print("-------------------------")
         alternative = input("What letter will you choose? ").lower().strip();
+        print(" ")
         
         for letter in secret_word:
-            index = secret_word.find(letter);
+            index = -1;
+            
+            count = 0;
+            # Finds available letter depending on it's position
+            for letterFound in secret_word:
+                if (letterFound == letter and count not in positions_found):
+                    index = count;
+                    break;
+                count = count + 1;
+                
+            if (index == -1):
+                break;
             
             # Check if the letter from that position was already found
             if (index in positions_found):
@@ -39,10 +52,14 @@ def start_game():
 
         if (chances == 0 | points >= len(secret_word)):
             game_controller.finish_game(points);
+            print("The correct word is: {}".format(secret_word))
             return;
+        
+        letters_left = len(secret_word) - len(positions_found);
+        print("You still got {} letters left!".format(letters_left))
 
 def handle_correct(letter, index):
-    print("You got it right! It's letter {} in position {}.".format(letter, index + 1));
+    print("You got it right! It's letter {} in position {}.".format(letter.upper(), index + 1));
 
     global points;
     points = points + 1;
