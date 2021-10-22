@@ -1,14 +1,14 @@
 import random;
 import game_controller;
 
-lose_points = list([10, 20, 30])
+lose_points = {10, 20, 30}
 
 minimum_number = 1;
 maximum_number = random.randrange(50, 100);
 secret_number = int(random.randrange(minimum_number, maximum_number));
 
 difficulty = 0;
-difficulties = ["Easy", "Medium", "Hard"]
+difficulties = {"Easy", "Medium", "Hard"}
 difficulty_rates = list([8, 5, 3])
 
 total_chances = difficulty_rates[difficulty];

@@ -1,10 +1,14 @@
 import random;
+import json;
 import game_controller;
 
 won = False;
 lose = False;
 
-words = ["laila", "luke", "preta", "gigi"]
+words_file = open("/resources/words.json");
+words_data = json.loads(words_file.read());
+words = [word.lower() for word in words_data];
+
 secret_word = words[random.randrange(0, len(words))].lower();
 
 chances = len(secret_word) * 2;
@@ -51,6 +55,7 @@ def start_game():
 
         if (chances == 0 or points >= len(secret_word)):
             game_controller.finish_game(points);
+            words_file.close();
             
             print("The correct word is: {}".format(secret_word))
             return;
