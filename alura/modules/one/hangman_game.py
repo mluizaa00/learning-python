@@ -1,5 +1,5 @@
-import random;
 import json;
+import random;
 import game_controller;
 
 def load_words():
@@ -56,9 +56,6 @@ def start_game():
                 break;
         
         handle_guess(already_found, right_guess, secret_word);
-        
-        letters_left = len(secret_word) - len(positions_found);
-        print("You still got {} letters left!".format(letters_left))
 
 def handle_guess(already_found, right_guess, secret_word):
     if (already_found == True):
@@ -72,6 +69,9 @@ def handle_guess(already_found, right_guess, secret_word):
         
         print("The correct word is: {}".format(secret_word))
         return;
+    
+    letters_left = len(secret_word) - len(positions_found);
+    print("You still got {} letters left!".format(letters_left))
     
 def handle_correct(letter, index):
     print("You got it right! It's letter {} in position {}.".format(letter.upper(), index + 1));
