@@ -1,7 +1,10 @@
 import guess_game;
 import hangman_game;
+import game_controller;
 
 def start_selector():
+    game_controller.load_settings();
+    
     print("[1] Guess [2] Hangman")
     game = int(input("Choose your game: "))
 

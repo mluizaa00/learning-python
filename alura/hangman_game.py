@@ -5,9 +5,10 @@ import game_controller;
 won = False;
 lose = False;
 
-words_file = open("/resources/words.json");
-words_data = json.loads(words_file.read());
-words = [word.lower() for word in words_data];
+with open("/resources/words.json") as file:
+    words_file = file;
+    words_data = json.loads(words_file.read());
+    words = [word.lower() for word in words_data];
 
 secret_word = words[random.randrange(0, len(words))].lower();
 
