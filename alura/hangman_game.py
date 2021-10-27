@@ -2,21 +2,28 @@ import random;
 import json;
 import game_controller;
 
-won = False;
-lose = False;
-
-with open("/resources/words.json") as file:
-    words_file = file;
-    words_data = json.loads(words_file.read());
-    words = [word.lower() for word in words_data];
-
-secret_word = words[random.randrange(0, len(words))].lower();
-
-chances = len(secret_word) * 2;
+def load_words():
+    with open("/resources/words.json") as file:
+        words_file = file;
+        words_data = json.loads(words_file.read());
+        words = [word.lower() for word in words_data];
+    
+    return words;
+        
 points = 0;
 positions_found = [];
+chances = 0;
 
-def start_game():        
+def start_game():   
+    won = False;
+    lose = False;   
+   
+    words = load_words();
+    secret_word = words[random.randrange(0, len(words))].lower();
+    
+    global chances;
+    chances = len(secret_word) * 2;
+    
     while(not won and not lose):
         right_guess = False;
         already_found = False;
@@ -48,22 +55,24 @@ def start_game():
                 right_guess = handle_correct(letter, index)
                 break;
         
-        if (already_found == True):
-            print("You already found that position!")
-        
-        if (right_guess == False):
-            handle_incorrect();
-
-        if (chances == 0 or points >= len(secret_word)):
-            game_controller.finish_game(points);
-            words_file.close();
-            
-            print("The correct word is: {}".format(secret_word))
-            return;
+        handle_guess(already_found, right_guess, secret_word);
         
         letters_left = len(secret_word) - len(positions_found);
         print("You still got {} letters left!".format(letters_left))
 
+def handle_guess(already_found, right_guess, secret_word):
+    if (already_found == True):
+        print("You already found that position!")
+        
+    if (right_guess == False):
+        handle_incorrect();
+
+    if (chances == 0 or points >= len(secret_word)):
+        game_controller.finish_game(points);
+        
+        print("The correct word is: {}".format(secret_word))
+        return;
+    
 def handle_correct(letter, index):
     print("You got it right! It's letter {} in position {}.".format(letter.upper(), index + 1));
 
